@@ -68,7 +68,7 @@ Automatically retries on temporary Slack API failures.
 You can view and test all APIs through Swagger UI:
 
 **Local:** http://localhost:8080/api-docs  
-**Production:** http://<your-url>/api-docs
+**Production:** http://your-url/api-docs
 
 <br/>
 
