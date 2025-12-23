@@ -1,0 +1,9 @@
+flask==3.0.0
+slack-sdk==3.26.1
+qrcode[pil]==7.4.2
+Pillow>=10.4.0
+gunicorn==21.2.0
+flasgger==0.9.7.1
+flask-limiter==3.5.0
+tenacity==8.2.3
+python-json-logger==2.0.7

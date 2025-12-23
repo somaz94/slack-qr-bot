@@ -1,0 +1,99 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: slack-qr-bot
+  namespace: slack-bots
+  labels:
+    app: slack-qr-bot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: slack-qr-bot
+  template:
+    metadata:
+      labels:
+        app: slack-qr-bot
+    spec:
+      containers:
+      - name: slack-qr-bot
+        image: harbor.somaz.link/library/slack-qr-bot:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: http
+        env:
+        - name: SLACK_BOT_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: slack-qr-bot-secret
+              key: SLACK_BOT_TOKEN
+        - name: API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: slack-qr-bot-api-key
+              key: API_KEY
+        - name: RATE_LIMIT_ENABLED
+          value: "false"
+        - name: PORT
+          value: "8080"
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: slack-qr-bot
+  namespace: slack-bots
+  labels:
+    app: slack-qr-bot
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 8080
+    protocol: TCP
+    name: http
+  selector:
+    app: slack-qr-bot
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: slack-qr-bot-ingress
+  namespace: slack-bots
+  annotations: 
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"   # Disable SSL redirection
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"      # Disable SSL passthrough
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: slack-qr-bot.somaz.link
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: slack-qr-bot
+            port:
+              number: 80
