@@ -527,7 +527,7 @@ environment {
 ## Rate Limiting Policy
 
 | Endpoint | Limit | Purpose |
-|----------|-------|---------||
+|----------|-------|---------|
 | Global default | 10 req/min | General calls |
 | `POST /generate-qr` | 20 req/min | Single channel QR generation |
 | `POST /generate-qr/broadcast` | 10 req/min | Multi-channel broadcast (high load) |
