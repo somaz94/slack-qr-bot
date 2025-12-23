@@ -4,14 +4,6 @@ A bot that converts APK download URLs into QR codes and automatically sends them
 
 <br/>
 
-## Example
-
-QR code being sent to a Slack channel:
-
-<img src="img/slack-qr-bot-example.png" alt="Slack QR Bot Example" width="400">
-
-<br/><br/>
-
 ## Key Features
 
 - Generate QR code images from APK download links
