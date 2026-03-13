@@ -49,14 +49,14 @@ def generate_qr_code(url, box_size=10, border=4, fill_color="black", back_color=
     )
     qr.add_data(url)
     qr.make(fit=True)
-    
+
     img = qr.make_image(fill_color=fill_color, back_color=back_color)
-    
+
     # Convert image to bytes
     img_byte_arr = io.BytesIO()
     img.save(img_byte_arr, format='PNG')
     img_byte_arr.seek(0)
-    
+
     return img_byte_arr
 
 
@@ -66,11 +66,11 @@ def get_channel_id(channel_name_or_id):
     if channel_name_or_id.startswith(('C', 'G', 'D', 'Z')) and len(channel_name_or_id) >= 9:
         logger.info(f"Using channel ID directly: {channel_name_or_id}")
         return channel_name_or_id
-    
+
     # Remove # prefix
     clean_name = channel_name_or_id.lstrip('#')
     logger.info(f"Looking up channel name: {clean_name}")
-    
+
     try:
         # Query public and private channels
         cursor = None
@@ -80,18 +80,18 @@ def get_channel_id(channel_name_or_id):
                 cursor=cursor,
                 limit=200
             )
-            
+
             for channel in response['channels']:
                 if channel['name'] == clean_name:
                     logger.info(f"Found channel ID: {channel['id']} for name: {clean_name}")
                     return channel['id']
-            
+
             cursor = response.get('response_metadata', {}).get('next_cursor')
             if not cursor:
                 break
-        
+
         raise ValueError(f"Channel not found: {clean_name}")
-        
+
     except SlackApiError as e:
         logger.error(f"Error looking up channel: {e.response['error']}")
         raise
@@ -108,14 +108,14 @@ def get_bot_channels():
     try:
         channels = []
         cursor = None
-        
+
         while True:
             response = slack_client.conversations_list(
                 types="public_channel,private_channel",
                 cursor=cursor,
                 limit=200
             )
-            
+
             for channel in response['channels']:
                 if channel.get('is_member', False):
                     channels.append({
@@ -124,13 +124,13 @@ def get_bot_channels():
                         "is_private": channel.get('is_private', False),
                         "num_members": channel.get('num_members', 0)
                     })
-            
+
             cursor = response.get('response_metadata', {}).get('next_cursor')
             if not cursor:
                 break
-        
+
         return channels
-        
+
     except SlackApiError as e:
         logger.error(f"Error fetching channels: {e.response['error']}")
         raise
@@ -147,7 +147,7 @@ def send_qr_to_slack(channel, apk_url, build_number=None, qr_options=None):
     try:
         # Convert channel name to ID
         channel_id = get_channel_id(channel)
-        
+
         # Check channel access (for debugging - continue even if it fails)
         try:
             channel_info = slack_client.conversations_info(channel=channel_id)
@@ -156,7 +156,7 @@ def send_qr_to_slack(channel, apk_url, build_number=None, qr_options=None):
             logger.info(f"Channel is_member: {channel_info['channel'].get('is_member', False)}")
         except SlackApiError as e:
             logger.warning(f"Cannot get channel info (will try upload anyway): {e.response['error']}")
-        
+
         # Generate QR code (apply custom options)
         if qr_options:
             qr_image = generate_qr_code(
@@ -168,14 +168,14 @@ def send_qr_to_slack(channel, apk_url, build_number=None, qr_options=None):
             )
         else:
             qr_image = generate_qr_code(apk_url)
-        
+
         # Compose message
-        message = f"📱 *Android APK Build Complete!*\n\n"
+        message = "📱 *Android APK Build Complete!*\n\n"
         if build_number:
             message += f"Build Number: #{build_number}\n"
         message += f"APK URL: {apk_url}\n\n"
         message += "👇 Scan QR code to download"
-        
+
         # Upload file to Slack
         response = slack_client.files_upload_v2(
             channel=channel_id,
@@ -183,10 +183,10 @@ def send_qr_to_slack(channel, apk_url, build_number=None, qr_options=None):
             filename=f"apk-qrcode-{build_number or 'latest'}.png",
             initial_comment=message
         )
-        
+
         logger.info(f"QR code sent successfully to {channel_id}")
         return response
-        
+
     except SlackApiError as e:
         logger.error(f"Error sending QR code: {e.response['error']}")
         logger.error(f"Channel: {channel}")

@@ -61,7 +61,7 @@ def generate_qr_webhook():
               type: string
               example: "F07KP4R8E9S"
       401:
-        description: API 키 누락
+        description: API key missing
         schema:
           type: object
           properties:
@@ -76,7 +76,7 @@ def generate_qr_webhook():
             payLoad:
               type: object
       403:
-        description: 잘못된 API 키
+        description: Invalid API key
         schema:
           type: object
           properties:
@@ -91,7 +91,7 @@ def generate_qr_webhook():
             payLoad:
               type: object
       400:
-        description: 필수 파라미터 누락
+        description: Missing required parameters
         schema:
           type: object
           properties:
@@ -99,7 +99,7 @@ def generate_qr_webhook():
               type: string
               example: "Missing required parameters: apk_url, channel"
       500:
-        description: 서버 오류
+        description: Server error
         schema:
           type: object
           properties:
@@ -109,24 +109,24 @@ def generate_qr_webhook():
     """
     try:
         data = request.json
-        
+
         # Check required parameters
         if not data or 'apk_url' not in data or 'channel' not in data:
             return jsonify(*bad_request("Missing required parameters: apk_url, channel"))
-        
+
         apk_url = data['apk_url']
         channel = data['channel']
         build_number = data.get('build_number')
-        
+
         # Generate and send QR code
         response = send_qr_to_slack(channel, apk_url, build_number)
-        
+
         return jsonify({
             "success": True,
             "message": "QR code sent to Slack",
             "file_id": response['file']['id']
         }), 200
-        
+
     except Exception as e:
         logger.error(f"Error in webhook: {str(e)}")
         return jsonify({"error": str(e)}), 500
@@ -155,7 +155,7 @@ def broadcast_qr():
           properties:
             apk_url:
               type: string
-              description: APK 다운로드 URL
+              description: APK download URL
               example: "https://example.com/test-app.apk"
             channels:
               type: array
@@ -208,7 +208,7 @@ def broadcast_qr():
             payLoad:
               type: object
       401:
-        description: API 키 누락
+        description: API key missing
         schema:
           type: object
           properties:
@@ -223,7 +223,7 @@ def broadcast_qr():
             payLoad:
               type: object
       403:
-        description: 잘못된 API 키
+        description: Invalid API key
         schema:
           type: object
           properties:
@@ -238,7 +238,7 @@ def broadcast_qr():
             payLoad:
               type: object
       400:
-        description: 필수 파라미터 누락
+        description: Missing required parameters
         schema:
           type: object
           properties:
@@ -253,7 +253,7 @@ def broadcast_qr():
             payLoad:
               type: object
       500:
-        description: 서버 오류
+        description: Server error
         schema:
           type: object
           properties:
@@ -270,21 +270,21 @@ def broadcast_qr():
     """
     try:
         data = request.json
-        
+
         if not data or 'apk_url' not in data or 'channels' not in data:
             return jsonify(*bad_request("Missing required parameters: apk_url, channels"))
-        
+
         apk_url = data['apk_url']
         channels = data['channels']
         build_number = data.get('build_number')
-        
+
         if not isinstance(channels, list) or len(channels) == 0:
             return jsonify(*bad_request("channels must be a non-empty array"))
-        
+
         results = []
         success_count = 0
         failed_count = 0
-        
+
         for channel in channels:
             try:
                 response = send_qr_to_slack(channel, apk_url, build_number)
@@ -301,7 +301,7 @@ def broadcast_qr():
                     "error": str(e)
                 })
                 failed_count += 1
-        
+
         return jsonify(*success_response(
             f"Sent to {success_count}/{len(channels)} channels",
             data={
@@ -310,7 +310,7 @@ def broadcast_qr():
                 "results": results
             }
         ))
-        
+
     except Exception as e:
         logger.error(f"Error in broadcast: {str(e)}")
         return jsonify(*server_error(str(e)))
@@ -339,7 +339,7 @@ def generate_custom_qr():
           properties:
             apk_url:
               type: string
-              description: APK 다운로드 URL
+              description: APK download URL
               example: "https://example.com/test-app.apk"
             channel:
               type: string
@@ -347,7 +347,7 @@ def generate_custom_qr():
               example: "#apk-qr-generator"
             build_number:
               type: string
-              description: 빌드 번호
+              description: Build number
               example: "123"
             qr_options:
               type: object
@@ -390,7 +390,7 @@ def generate_custom_qr():
             payLoad:
               type: object
       401:
-        description: API 키 누락
+        description: API key missing
         schema:
           type: object
           properties:
@@ -405,7 +405,7 @@ def generate_custom_qr():
             payLoad:
               type: object
       403:
-        description: 잘못된 API 키
+        description: Invalid API key
         schema:
           type: object
           properties:
@@ -420,7 +420,7 @@ def generate_custom_qr():
             payLoad:
               type: object
       400:
-        description: 필수 파라미터 누락
+        description: Missing required parameters
         schema:
           type: object
           properties:
@@ -435,7 +435,7 @@ def generate_custom_qr():
             payLoad:
               type: object
       500:
-        description: 서버 오류
+        description: Server error
         schema:
           type: object
           properties:
@@ -452,23 +452,23 @@ def generate_custom_qr():
     """
     try:
         data = request.json
-        
+
         if not data or 'apk_url' not in data or 'channel' not in data:
             return jsonify(*bad_request("Missing required parameters: apk_url, channel"))
-        
+
         apk_url = data['apk_url']
         channel = data['channel']
         build_number = data.get('build_number')
         qr_options = data.get('qr_options')
-        
+
         # Generate and send QR code
         response = send_qr_to_slack(channel, apk_url, build_number, qr_options)
-        
+
         return jsonify(*success_response(
             "Custom QR code sent to Slack",
             data={"file_id": response['file']['id']}
         ))
-        
+
     except Exception as e:
         logger.error(f"Error in custom QR: {str(e)}")
         return jsonify(*server_error(str(e)))
@@ -496,15 +496,15 @@ def broadcast_all_channels():
           properties:
             apk_url:
               type: string
-              description: APK 다운로드 URL
+              description: APK download URL
               example: "https://example.com/test-app.apk"
             build_number:
               type: string
-              description: 빌드 번호
+              description: Build number
               example: "123"
             qr_options:
               type: object
-              description: QR 코드 커스터마이징 옵션
+              description: QR code customization options
               properties:
                 box_size:
                   type: integer
@@ -560,7 +560,7 @@ def broadcast_all_channels():
             payLoad:
               type: object
       401:
-        description: API 키 누락
+        description: API key missing
         schema:
           type: object
           properties:
@@ -575,7 +575,7 @@ def broadcast_all_channels():
             payLoad:
               type: object
       403:
-        description: 잘못된 API 키
+        description: Invalid API key
         schema:
           type: object
           properties:
@@ -590,7 +590,7 @@ def broadcast_all_channels():
             payLoad:
               type: object
       400:
-        description: 필수 파라미터 누락
+        description: Missing required parameters
         schema:
           type: object
           properties:
@@ -605,7 +605,7 @@ def broadcast_all_channels():
             payLoad:
               type: object
       500:
-        description: 서버 오류
+        description: Server error
         schema:
           type: object
           properties:
@@ -622,33 +622,33 @@ def broadcast_all_channels():
     """
     try:
         data = request.json
-        
+
         if not data or 'apk_url' not in data:
             return jsonify(*bad_request("Missing required parameter: apk_url"))
-        
+
         apk_url = data['apk_url']
         build_number = data.get('build_number')
         qr_options = data.get('qr_options')
-        
+
         # Query all channels the bot belongs to
         try:
             all_channels = get_bot_channels()
         except Exception as e:
             logger.error(f"Failed to get channels: {str(e)}")
             return jsonify(*server_error(f"Failed to retrieve channels: {str(e)}"))
-        
+
         if not all_channels:
             return jsonify(*bad_request("Bot is not a member of any channels"))
-        
+
         # Send to all channels
         results = []
         success_count = 0
         failed_count = 0
-        
+
         for channel in all_channels:
             channel_id = channel['id']
             channel_name = channel['name']
-            
+
             try:
                 response = send_qr_to_slack(channel_id, apk_url, build_number, qr_options)
                 results.append({
@@ -666,7 +666,7 @@ def broadcast_all_channels():
                     "error": str(e)
                 })
                 failed_count += 1
-        
+
         return jsonify(*success_response(
             f"Sent to {success_count}/{len(all_channels)} channels",
             data={
@@ -676,7 +676,7 @@ def broadcast_all_channels():
                 "results": results
             }
         ))
-        
+
     except Exception as e:
         logger.error(f"Error in broadcast-all: {str(e)}")
         return jsonify(*server_error(str(e)))

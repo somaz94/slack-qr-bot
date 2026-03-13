@@ -14,15 +14,15 @@ slack_events_bp = Blueprint('slack_events', __name__)
 def slack_events():
     """Slack Events API endpoint"""
     data = request.json
-    
+
     # URL verification challenge response
     if 'challenge' in data:
         return jsonify({"challenge": data['challenge']})
-    
+
     # Process events
     if 'event' in data:
         event = data['event']
-        
+
         # Process message events
         if event['type'] == 'message' and 'apk_build' in event.get('text', ''):
             try:
@@ -31,11 +31,11 @@ def slack_events():
                 if 'URL:' in text:
                     apk_url = text.split('URL:')[1].strip()
                     channel = event['channel']
-                    
+
                     # Generate and send QR
                     send_qr_to_slack(channel, apk_url)
-                    
+
             except Exception as e:
                 logger.error(f"Error processing event: {str(e)}")
-    
+
     return jsonify({"status": "ok"}), 200

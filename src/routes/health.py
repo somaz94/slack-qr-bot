@@ -77,7 +77,7 @@ def health_check():
               type: object
     """
     slack_status = check_slack_connection()
-    
+
     if slack_status['connected']:
         return jsonify(*success_response(
             "Service is healthy",

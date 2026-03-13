@@ -4,13 +4,13 @@
 def create_response(code, message, data=None, payload=None):
     """
     Create standard API response format
-    
+
     Args:
         code: HTTP status code
         message: Response message
         data: Response data (default: {})
         payload: Additional payload (default: {})
-    
+
     Returns:
         tuple: (response dictionary, HTTP status code)
     """

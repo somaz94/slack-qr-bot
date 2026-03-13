@@ -11,24 +11,24 @@ def validate_env():
     required_vars = {
         "SLACK_BOT_TOKEN": "Slack Bot OAuth Token (xoxb-...)"
     }
-    
+
     missing_vars = []
     for var, description in required_vars.items():
         if not os.environ.get(var):
             missing_vars.append(f"{var}: {description}")
-    
+
     if missing_vars:
         error_msg = "Missing required environment variables:\n" + "\n".join(f"  - {var}" for var in missing_vars)
         logging.error(error_msg)
         print(f"\n❌ {error_msg}\n", file=sys.stderr)
         sys.exit(1)
-    
+
     # Warning for optional environment variables
     optional_vars = {
         "API_KEY": "API authentication key (recommended for production)",
         "RATE_LIMIT_ENABLED": "Enable rate limiting (default: true)"
     }
-    
+
     for var, description in optional_vars.items():
         if not os.environ.get(var):
             logging.warning(f"Optional environment variable not set: {var} - {description}")
@@ -50,7 +50,7 @@ def setup_logging():
         datefmt='%Y-%m-%d %H:%M:%S'
     )
     log_handler.setFormatter(formatter)
-    
+
     # Configure root logger
     root_logger = logging.getLogger()
     root_logger.addHandler(log_handler)
