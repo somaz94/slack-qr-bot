@@ -1,0 +1,44 @@
+# Virtual Environment
+venv/
+.venv/
+env/
+
+# Git
+.git
+.gitignore
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+
+# K8s manifests
+k8s/
+
+# Docs
+README.md
+CLAUDE.md
+CHANGELOG.md
+CONTRIBUTORS.md
+LICENSE
+
+# CI/CD
+.github/
+
+# Cache
+__pycache__/
+*.py[codz]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Config
+cliff.toml
+Makefile
+img/
