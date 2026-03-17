@@ -1,5 +1,9 @@
 # Slack QR Bot - Project Analysis Document
 
+## Commit Guidelines
+
+- Do not include `Co-Authored-By` lines in commit messages.
+
 ## Project Overview
 
 Slack QR Bot is a Flask-based RESTful API service that converts APK download URLs into QR code images and automatically sends them to Slack channels. It is designed to integrate with CI/CD pipelines for easy distribution and testing of built APK files.
@@ -357,3 +361,7 @@ kubectl logs -f deployment/slack-qr-bot
 ```
 
 ---
+
+## Language
+
+- Communicate with the user in Korean.
