@@ -7,7 +7,7 @@ VENV := venv
 PYTHON := $(VENV)/bin/python3
 PIP := $(VENV)/bin/pip
 
-.PHONY: all run test clean help venv docker-build docker-push docker-buildx deploy logs
+.PHONY: all run test clean help venv docker-build docker-push docker-buildx deploy logs check-gh branch pr
 
 all: venv lint
 
@@ -81,6 +81,28 @@ logs:
 clean:
 	rm -rf $(VENV) .pytest_cache .coverage htmlcov
 	find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true
+
+## Workflow
+
+check-gh: ## Check if gh CLI is installed and authenticated
+	@command -v gh >/dev/null 2>&1 || { echo "\033[31m✗ gh CLI not installed. Run: brew install gh\033[0m"; exit 1; }
+	@gh auth status >/dev/null 2>&1 || { echo "\033[31m✗ gh CLI not authenticated. Run: gh auth login\033[0m"; exit 1; }
+	@echo "\033[32m✓ gh CLI ready\033[0m"
+
+branch: ## Create feature branch (usage: make branch name=feature-name)
+	@if [ -z "$(name)" ]; then echo "Usage: make branch name=<feature-name>"; exit 1; fi
+	git checkout main
+	git pull origin main
+	git checkout -b feat/$(name)
+	@echo "\033[32m✓ Branch feat/$(name) created\033[0m"
+
+pr: check-gh ## Run tests, push, and create PR (usage: make pr title="Add feature")
+	@if [ -z "$(title)" ]; then echo "Usage: make pr title=\"PR title\""; exit 1; fi
+	$(VENV)/bin/pytest tests/ -v --cov=src
+	$(VENV)/bin/flake8 src/ --max-line-length=120
+	git push -u origin $$(git branch --show-current)
+	@./scripts/create-pr.sh "$(title)"
+	@echo "\033[32m✓ PR created\033[0m"
 
 ## Help
 help:
