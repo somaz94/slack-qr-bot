@@ -67,8 +67,8 @@ check "GET /channels responds" "$([ "$CH_STATUS" != "000" ] && echo true || echo
 # 5. Swagger docs
 # ---------------------------------------------------------------
 echo "[5/6] Swagger docs..."
-SWAGGER_STATUS=$(curl -s -o /dev/null -w '%{http_code}' "${BASE}/apidocs/" 2>/dev/null) || true
-check "GET /apidocs/ => 200" "$([ "$SWAGGER_STATUS" = "200" ] && echo true || echo false)"
+SWAGGER_STATUS=$(curl -s -o /dev/null -w '%{http_code}' "${BASE}/api-docs" 2>/dev/null) || true
+check "GET /api-docs => 200" "$([ "$SWAGGER_STATUS" = "200" ] && echo true || echo false)"
 
 # ---------------------------------------------------------------
 # 6. Unknown route returns 404
