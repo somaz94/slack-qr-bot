@@ -187,6 +187,9 @@ undeploy-docker: ## Stop and remove Docker container
 deploy-smoke: ## Smoke test against running server
 	@bash hack/test-deploy.sh $(DEPLOY_PORT)
 
+.PHONY: deploy-all
+deploy-all: docker-build deploy-docker deploy-smoke ## Build + deploy + smoke test (all-in-one)
+
 .PHONY: deploy-k8s
 deploy-k8s: ## Deploy to Kubernetes cluster
 	@echo "Deploying to namespace $(K8S_NAMESPACE)..."
