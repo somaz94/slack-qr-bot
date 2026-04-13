@@ -1,0 +1,43 @@
+Thank you for installing {{ .Chart.Name }}.
+
+Your release is named {{ .Release.Name }}.
+
+Before using, ensure the required secrets exist:
+
+  kubectl create secret generic {{ .Values.secrets.slackTokenSecretName }} \
+    --from-literal={{ .Values.secrets.slackTokenKey }}=xoxb-your-token \
+    -n {{ .Release.Namespace }}
+
+  kubectl create secret generic {{ .Values.secrets.apiKeySecretName }} \
+    --from-literal={{ .Values.secrets.apiKeyKey }}=your-api-key \
+    -n {{ .Release.Namespace }}
+
+To verify the installation:
+
+1. Check if the pod is running:
+   kubectl get pods -l "app.kubernetes.io/name={{ include "slack-qr-bot.name" . }},app.kubernetes.io/instance={{ .Release.Name }}" -n {{ .Release.Namespace }}
+
+2. Access the server:
+{{- if .Values.ingress.enabled }}
+{{- range $host := .Values.ingress.hosts }}
+   http{{ if $.Values.ingress.tls }}s{{ end }}://{{ $host.host }}/health
+{{- end }}
+{{- else if contains "NodePort" .Values.service.type }}
+   export NODE_PORT=$(kubectl get --namespace {{ .Release.Namespace }} -o jsonpath="{.spec.ports[0].nodePort}" services {{ include "slack-qr-bot.fullname" . }})
+   export NODE_IP=$(kubectl get nodes --namespace {{ .Release.Namespace }} -o jsonpath="{.items[0].status.addresses[0].address}")
+   echo http://$NODE_IP:$NODE_PORT/health
+{{- else if contains "LoadBalancer" .Values.service.type }}
+   export SERVICE_IP=$(kubectl get svc --namespace {{ .Release.Namespace }} {{ include "slack-qr-bot.fullname" . }} --template "{{"{{ range (index .status.loadBalancer.ingress 0) }}{{.}}{{ end }}"}}")
+   echo http://$SERVICE_IP:{{ .Values.service.port }}/health
+{{- else }}
+   kubectl port-forward svc/{{ include "slack-qr-bot.fullname" . }} 8080:{{ .Values.service.port }} -n {{ .Release.Namespace }}
+   curl http://localhost:8080/health
+{{- end }}
+
+3. View logs:
+   kubectl logs -l "app.kubernetes.io/name={{ include "slack-qr-bot.name" . }}" -f -n {{ .Release.Namespace }}
+
+Version: {{ .Chart.Version }}
+AppVersion: {{ .Chart.AppVersion }}
+
+For more information: {{ .Chart.Home }}

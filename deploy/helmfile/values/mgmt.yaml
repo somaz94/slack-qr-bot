@@ -1,0 +1,83 @@
+# Example values for mgmt environment
+# Copy this file and customize for your environment
+
+replicaCount: 1
+
+revisionHistoryLimit: 1
+
+image:
+  repository: somaz940/slack-qr-bot
+  pullPolicy: IfNotPresent
+  tag: "v0.2.0"
+
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+  fsGroup: 1000
+
+securityContext: {}
+
+config:
+  port: "8080"
+  rateLimitEnabled: "false"
+
+secrets:
+  slackTokenSecretName: "slack-qr-bot-secret"
+  slackTokenKey: "SLACK_BOT_TOKEN"
+  apiKeySecretName: "slack-qr-bot-api-key"
+  apiKeyKey: "API_KEY"
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "false"
+  hosts:
+    - host: slack-qr-bot.example.com
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+
+resources:
+  requests:
+    memory: "128Mi"
+    cpu: "100m"
+  limits:
+    memory: "256Mi"
+    cpu: "200m"
+
+probes:
+  liveness:
+    enabled: true
+    path: /health
+    port: 8080
+    initialDelaySeconds: 30
+    periodSeconds: 10
+  readiness:
+    enabled: true
+    path: /health
+    port: 8080
+    initialDelaySeconds: 5
+    periodSeconds: 10
+
+nodeSelector: {}
+tolerations: []
+affinity: {}

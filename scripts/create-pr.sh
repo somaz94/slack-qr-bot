@@ -8,6 +8,11 @@ TITLE="${1:?Usage: create-pr.sh \"PR title\"}"
 BRANCH=$(git branch --show-current)
 BASE="main"
 
+if [[ "${BRANCH}" == "${BASE}" ]]; then
+    echo "Error: Cannot create PR from ${BASE} branch"
+    exit 1
+fi
+
 # Get commits since diverging from base branch.
 COMMITS=$(git log "${BASE}..HEAD" --pretty=format:"- %s" --reverse 2>/dev/null || echo "")
 
@@ -38,9 +43,9 @@ if [ -z "$SUMMARY" ]; then
 fi
 
 # Detect what changed for test plan.
-CHANGED_PKGS=$(git diff "${BASE}..HEAD" --name-only | grep '_test\.go$' | sed 's|/[^/]*$||' | sort -u || true)
+CHANGED_TESTS=$(git diff "${BASE}..HEAD" --name-only | grep 'test_.*\.py$' | sed 's|/[^/]*$||' | sort -u || true)
 HAS_TESTS=false
-[ -n "$CHANGED_PKGS" ] && HAS_TESTS=true
+[ -n "$CHANGED_TESTS" ] && HAS_TESTS=true
 
 # Build body.
 BODY=$(cat <<EOF
@@ -53,16 +58,16 @@ $([ -n "$DOCS" ] && echo "$DOCS" || echo "- (no doc commits)")
 $([ -n "$CI" ] && echo "$CI" || true)
 
 ## Test plan
-- [x] Unit tests pass (\`go test ./... -race -cover\`)
-- [x] \`go vet\` passes
+- [x] Unit tests pass (\`pytest tests/ -v --cov=src\`)
+- [x] Linting passes (\`flake8 src/ --max-line-length=120\`)
 $(if [ "$HAS_TESTS" = true ]; then
   echo "- [x] New/updated tests added"
-  for pkg in $CHANGED_PKGS; do
-    echo "- [x] \`${pkg}\` tests pass"
+  for pkg in $CHANGED_TESTS; do
+    echo "- [x] \`${pkg}\` tests updated"
   done
 fi)
-- [ ] Demo script passes (\`make demo\`)
-- [ ] Build succeeds (\`make build\`)
+- [ ] Docker build succeeds (\`make docker-build\`)
+- [ ] Helm chart renders (\`make test-helm\`)
 EOF
 )
 

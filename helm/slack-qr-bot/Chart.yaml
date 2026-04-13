@@ -1,0 +1,23 @@
+apiVersion: v2
+name: slack-qr-bot
+description: A Helm chart for a Slack bot that generates QR codes from URLs and delivers them to channels
+type: application
+version: 0.2.0
+appVersion: "v0.2.0"
+
+kubeVersion: ">=1.16.0-0"
+
+keywords:
+  - slack
+  - qr-code
+  - bot
+  - automation
+  - ci-cd
+
+home: https://github.com/somaz94/slack-qr-bot
+sources:
+  - https://github.com/somaz94/slack-qr-bot
+
+maintainers:
+  - name: somaz94
+    url: https://github.com/somaz94

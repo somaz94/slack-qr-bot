@@ -1,5 +1,19 @@
 FROM python:3.14-slim
 
+ARG VERSION=dev
+ARG GIT_COMMIT=unknown
+ARG BUILD_DATE=unknown
+
+# OCI image labels
+LABEL org.opencontainers.image.title="slack-qr-bot" \
+      org.opencontainers.image.description="Slack bot that generates QR codes from URLs and delivers them to channels" \
+      org.opencontainers.image.url="https://github.com/somaz94/slack-qr-bot" \
+      org.opencontainers.image.source="https://github.com/somaz94/slack-qr-bot" \
+      org.opencontainers.image.licenses="Apache-2.0" \
+      org.opencontainers.image.version="${VERSION}" \
+      org.opencontainers.image.revision="${GIT_COMMIT}" \
+      org.opencontainers.image.created="${BUILD_DATE}"
+
 WORKDIR /app
 
 # Install system dependencies

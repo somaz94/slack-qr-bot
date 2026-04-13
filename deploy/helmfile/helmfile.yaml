@@ -1,0 +1,37 @@
+environments:
+  mgmt:
+    values:
+      - values/mgmt.yaml
+
+---
+
+releases:
+  - name: slack-qr-bot
+    namespace: slack-bots
+    createNamespace: true
+    chart: ../../helm/slack-qr-bot
+    version: 0.2.0
+    values:
+      - values/mgmt.yaml
+    labels:
+      environment: mgmt
+
+# helmDefaults:
+#   wait: true
+#   timeout: 300
+#   atomic: true
+#   cleanupOnFail: true
+
+hooks:
+  - events: ["presync"]
+    showlogs: true
+    command: "kubectl"
+    args:
+      - "create"
+      - "namespace"
+      - "slack-bots"
+      - "--dry-run=client"
+      - "-o"
+      - "yaml"
+      - "||"
+      - "true"

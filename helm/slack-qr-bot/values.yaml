@@ -1,0 +1,106 @@
+# Default values for slack-qr-bot.
+nameOverride: ""
+fullnameOverride: ""
+
+replicaCount: 1
+
+revisionHistoryLimit: 3
+
+image:
+  repository: somaz940/slack-qr-bot
+  pullPolicy: IfNotPresent
+  tag: "v0.2.0"
+
+imagePullSecrets: []
+
+serviceAccount:
+  create: true
+  name: ""
+  annotations: {}
+
+podAnnotations: {}
+podLabels: {}
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 1000
+  fsGroup: 1000
+
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+      - ALL
+
+# Application configuration (environment variables)
+config:
+  port: "8080"
+  rateLimitEnabled: "false"
+
+# Secrets configuration
+# Reference existing K8s secrets for sensitive values.
+# Prerequisites: create secrets before installing the chart.
+#   kubectl create secret generic slack-qr-bot-secret \
+#     --from-literal=SLACK_BOT_TOKEN=xoxb-your-token -n slack-bots
+#   kubectl create secret generic slack-qr-bot-api-key \
+#     --from-literal=API_KEY=your-api-key -n slack-bots
+secrets:
+  slackTokenSecretName: "slack-qr-bot-secret"
+  slackTokenKey: "SLACK_BOT_TOKEN"
+  apiKeySecretName: "slack-qr-bot-api-key"
+  apiKeyKey: "API_KEY"
+
+# Extra environment variables
+extraEnv: []
+# Example:
+#   - name: CUSTOM_VAR
+#     value: "custom-value"
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+  annotations: {}
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    # cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - host: slack-qr-bot.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+  #  - secretName: slack-qr-bot-tls
+  #    hosts:
+  #      - slack-qr-bot.example.com
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+probes:
+  liveness:
+    enabled: true
+    path: /health
+    port: http
+    initialDelaySeconds: 30
+    periodSeconds: 10
+  readiness:
+    enabled: true
+    path: /health
+    port: http
+    initialDelaySeconds: 5
+    periodSeconds: 5
+
+nodeSelector: {}
+tolerations: []
+affinity: {}

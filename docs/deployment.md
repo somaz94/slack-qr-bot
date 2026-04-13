@@ -38,6 +38,7 @@ make run-gunicorn
 make test        # Run tests with coverage
 make coverage    # Generate HTML coverage report
 make lint        # Run flake8 linter
+make test-helm   # Validate Helm chart
 ```
 
 <br/>
@@ -52,12 +53,21 @@ make lint        # Run flake8 linter
 # Build image
 make docker-build
 
-# Run container
+# Run as container
+make deploy-docker
+
+# Or manually
 docker run -d \
   -e SLACK_BOT_TOKEN=xoxb-your-token \
   -e API_KEY=your-secret-key \
   -p 8080:8080 \
-  somaz940/slack-qr-bot:latest
+  somaz940/slack-qr-bot:v0.2.0
+
+# Smoke test
+make deploy-smoke
+
+# Stop and remove
+make undeploy-docker
 ```
 
 <br/>
@@ -108,8 +118,15 @@ kubectl create secret docker-registry harbor-robot-secret \
 ### 2. Deploy
 
 ```bash
-make deploy
+# Standalone manifests
+make deploy-k8s
+
+# Or with Helmfile
+cd deploy/helmfile
+helmfile -e mgmt apply
 ```
+
+See [Deploy Examples](../deploy/README.md) for Helmfile details.
 
 <br/>
 
@@ -123,7 +140,7 @@ kubectl get pods -n slack-bots -l app=slack-qr-bot
 make logs
 
 # Health check
-kubectl port-forward -n slack-bots svc/slack-qr-bot 8080:8080
+kubectl port-forward -n slack-bots svc/slack-qr-bot 8080:80
 curl http://localhost:8080/health
 ```
 
@@ -137,27 +154,37 @@ make restart
 
 # Tail logs
 make logs
+
+# Remove deployment
+make undeploy-k8s
 ```
 
 <br/>
 
-## Environment Variables
+## Helm Chart
 
-| Variable | Required | Default | Description |
-|----------|----------|---------|-------------|
-| `SLACK_BOT_TOKEN` | Yes | - | Slack Bot OAuth Token (`xoxb-...`) |
-| `API_KEY` | No | _(none)_ | API authentication key (recommended for production) |
-| `RATE_LIMIT_ENABLED` | No | `true` | Enable rate limiting |
-| `PORT` | No | `8080` | Service port |
+### Install from Helm Repository
 
-<br/>
+```bash
+helm repo add slack-qr-bot https://somaz94.github.io/slack-qr-bot/helm-repo
+helm repo update
 
-## Rate Limits
+helm install my-bot slack-qr-bot/slack-qr-bot \
+  -n slack-bots --create-namespace
+```
 
-| Endpoint | Limit |
-|----------|-------|
-| Global default | 10/min |
-| `/generate-qr` | 20/min |
-| `/generate-qr/custom` | 20/min |
-| `/generate-qr/broadcast` | 10/min |
-| `/generate-qr/broadcast-all` | 5/min |
+### Install from Local Chart
+
+```bash
+helm install my-bot ./helm/slack-qr-bot \
+  -f deploy/helmfile/values/mgmt.yaml \
+  -n slack-bots --create-namespace
+```
+
+### Validate Chart
+
+```bash
+make test-helm
+```
+
+See [helm/slack-qr-bot/values.yaml](../helm/slack-qr-bot/values.yaml) for all configurable options.

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "slack-qr-bot.fullname" . }}-test-connection"
+  labels:
+    {{- include "slack-qr-bot.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ include "slack-qr-bot.fullname" . }}:{{ .Values.service.port }}/health']
+  restartPolicy: Never

@@ -1,0 +1,56 @@
+# Example: Production deployment
+replicaCount: 2
+
+revisionHistoryLimit: 1
+
+image:
+  repository: somaz940/slack-qr-bot
+  pullPolicy: IfNotPresent
+  tag: "v0.2.0"
+
+config:
+  port: "8080"
+  rateLimitEnabled: "true"
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+  hosts:
+    - host: slack-qr-bot.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: slack-qr-bot-tls
+      hosts:
+        - slack-qr-bot.example.com
+
+resources:
+  requests:
+    memory: "256Mi"
+    cpu: "200m"
+  limits:
+    memory: "512Mi"
+    cpu: "500m"
+
+probes:
+  liveness:
+    enabled: true
+    path: /health
+    port: http
+    initialDelaySeconds: 30
+    periodSeconds: 10
+  readiness:
+    enabled: true
+    path: /health
+    port: http
+    initialDelaySeconds: 5
+    periodSeconds: 5

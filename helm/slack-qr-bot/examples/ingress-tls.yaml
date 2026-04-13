@@ -1,0 +1,18 @@
+# Example: Ingress with TLS (cert-manager)
+replicaCount: 1
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+  hosts:
+    - host: slack-qr-bot.example.com
+      paths:
+        - path: /
+          pathType: Prefix
+  tls:
+    - secretName: slack-qr-bot-tls
+      hosts:
+        - slack-qr-bot.example.com
