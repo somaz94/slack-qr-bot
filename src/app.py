@@ -5,35 +5,28 @@ from flasgger import Swagger
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
-from .config import (
-    swagger_config, swagger_template, RATE_LIMIT_ENABLED,
-    RATE_LIMIT_DEFAULT, setup_logging, validate_env
-)
+from .config import swagger_config, swagger_template, RATE_LIMIT_ENABLED, RATE_LIMIT_DEFAULT, setup_logging, validate_env
 from .routes import health_bp, qr_bp, channels_bp, slack_events_bp
-
-# Validate environment variables
-validate_env()
-
-# Setup logging
-setup_logging()
-logger = logging.getLogger(__name__)
-
-# Global Rate Limiter instance
-limiter = Limiter(
-    key_func=get_remote_address,
-    default_limits=[RATE_LIMIT_DEFAULT] if RATE_LIMIT_ENABLED else [],
-    storage_uri="memory://"
-)
 
 
 def create_app():
     """Flask application factory"""
+    # Validate environment variables & setup logging (run at app creation time)
+    validate_env()
+    setup_logging()
+    logger = logging.getLogger(__name__)
+
     app = Flask(__name__)
 
     # Initialize Swagger
     Swagger(app, config=swagger_config, template=swagger_template)
 
-    # Connect Rate Limiter to app
+    # Create Rate Limiter and connect to app
+    limiter = Limiter(
+        key_func=get_remote_address,
+        default_limits=[RATE_LIMIT_DEFAULT] if RATE_LIMIT_ENABLED else [],
+        storage_uri="memory://"
+    )
     limiter.init_app(app)
 
     # Register Blueprints

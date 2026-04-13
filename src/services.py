@@ -15,14 +15,8 @@ slack_token = os.environ.get("SLACK_BOT_TOKEN")
 slack_client = WebClient(token=slack_token)
 
 
-@retry(
-    stop=stop_after_attempt(3),
-    wait=wait_exponential(multiplier=1, min=2, max=10),
-    retry=retry_if_exception_type(SlackApiError),
-    reraise=True
-)
 def check_slack_connection():
-    """Check Slack API connection status (with retry logic)"""
+    """Check Slack API connection status"""
     try:
         response = slack_client.auth_test()
         return {

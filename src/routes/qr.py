@@ -119,17 +119,16 @@ def generate_qr_webhook():
         build_number = data.get('build_number')
 
         # Generate and send QR code
-        response = send_qr_to_slack(channel, apk_url, build_number)
+        result = send_qr_to_slack(channel, apk_url, build_number)
 
-        return jsonify({
-            "success": True,
-            "message": "QR code sent to Slack",
-            "file_id": response['file']['id']
-        }), 200
+        return jsonify(*success_response(
+            "QR code sent to Slack",
+            data={"file_id": result['file']['id']}
+        ))
 
     except Exception as e:
         logger.error(f"Error in webhook: {str(e)}")
-        return jsonify({"error": str(e)}), 500
+        return jsonify(*server_error(str(e)))
 
 
 @qr_bp.route('/generate-qr/broadcast', methods=['POST'])

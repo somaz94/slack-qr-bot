@@ -34,9 +34,9 @@ class TestGenerateQr:
             "channel": "#test",
             "build_number": "42"
         })
-        data = resp.get_json()
-        assert data["success"] is True
-        assert data["file_id"] == "F123"
+        body, code = parse_response(resp)
+        assert code == 200
+        assert body["data"]["file_id"] == "F123"
 
     @patch("src.decorators.API_KEY", "")
     @patch("src.routes.qr.send_qr_to_slack")
@@ -46,7 +46,8 @@ class TestGenerateQr:
             "apk_url": "https://example.com/app.apk",
             "channel": "#test"
         })
-        assert resp.status_code == 500
+        body, code = parse_response(resp)
+        assert code == 500
 
 
 class TestBroadcastQr:
