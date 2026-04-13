@@ -1,11 +1,13 @@
 import os
-import logging
 from flask import Flask
 from flasgger import Swagger
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 
-from .config import swagger_config, swagger_template, RATE_LIMIT_ENABLED, RATE_LIMIT_DEFAULT, setup_logging, validate_env
+from .config import (
+    swagger_config, swagger_template, RATE_LIMIT_ENABLED,
+    RATE_LIMIT_DEFAULT, setup_logging, validate_env
+)
 from .routes import health_bp, qr_bp, channels_bp, slack_events_bp
 
 
@@ -14,7 +16,6 @@ def create_app():
     # Validate environment variables & setup logging (run at app creation time)
     validate_env()
     setup_logging()
-    logger = logging.getLogger(__name__)
 
     app = Flask(__name__)
 
