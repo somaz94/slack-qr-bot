@@ -2,24 +2,34 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased (2026-04-13)
+## [v0.3.0](https://github.com/somaz94/slack-qr-bot/compare/v0.2.0...v0.3.0) (2026-04-13)
 
 ### Features
 
+- add deploy-all target for one-step build, deploy, and smoke test ([7bb968d](https://github.com/somaz94/slack-qr-bot/commit/7bb968d22d6e50d54b10e0ab4c73da422efbb9d8))
 - add CODEOWNERS ([9694a08](https://github.com/somaz94/slack-qr-bot/commit/9694a08dc02fc44030e9b4b978e171ad3fa51fcb))
 
 ### Bug Fixes
 
+- resolve flake8 lint errors in app.py ([7667e4c](https://github.com/somaz94/slack-qr-bot/commit/7667e4c6b4011a510eb3832d13b0e32d613d15a1))
+- correct swagger endpoint path in smoke test ([7e6c369](https://github.com/somaz94/slack-qr-bot/commit/7e6c369dabce1f8f5f025666dfbe8232a3f9bbba))
 - use GITHUB_TOKEN for dependabot auto merge ([a2ddb39](https://github.com/somaz94/slack-qr-bot/commit/a2ddb39ee22cb1d3cd5d20baff35e2eeafbe9ac4))
+
+### Code Refactoring
+
+- restructure project to match static-file-server patterns ([0d8b2d2](https://github.com/somaz94/slack-qr-bot/commit/0d8b2d2151f6461a743912163ab62b193ee8d4dc))
+- sync functional logic with gitlab-project version ([c237a48](https://github.com/somaz94/slack-qr-bot/commit/c237a4840172d1d9ad5bc930522bfdc0aa9e6919))
 
 ### Documentation
 
+- add lint workflow, Helm README, test and version guides ([99f8db6](https://github.com/somaz94/slack-qr-bot/commit/99f8db6cb358a680ad5b5653595674b67320a65c))
 - remove duplicate rules covered by global CLAUDE.md ([d9c0c93](https://github.com/somaz94/slack-qr-bot/commit/d9c0c93a2a8aecbd10a207b7adb44ba4b8dc85b7))
 - add no-push rule to CLAUDE.md ([452c2e6](https://github.com/somaz94/slack-qr-bot/commit/452c2e67f8f2b2ecba08564b627e320c933cfae5))
 - update CLAUDE.md with commit guidelines and language ([e770212](https://github.com/somaz94/slack-qr-bot/commit/e7702125bc74531cd98dadf28a1fe1f29d3d73e8))
 
 ### Continuous Integration
 
+- add Docker build and push job to release workflow ([2e29823](https://github.com/somaz94/slack-qr-bot/commit/2e2982359d7e303d598c7899bfc6aacea5472037))
 - skip auto-generated changelog and contributors commits in release notes ([b52d635](https://github.com/somaz94/slack-qr-bot/commit/b52d6354aa815e261ea8cf6a943c81012b996f92))
 - revert to body_path RELEASE.md in release workflow ([7aea35d](https://github.com/somaz94/slack-qr-bot/commit/7aea35dada20e67f7eda59b6f87b50bb2a920e35))
 - use generate_release_notes instead of RELEASE.md ([1fca892](https://github.com/somaz94/slack-qr-bot/commit/1fca892bc60ba59aa8a0c2d19dc515859f8af29c))
@@ -33,6 +43,7 @@ All notable changes to this project will be documented in this file.
 
 ### Chores
 
+- bump version to v0.3.0 ([d8a45a7](https://github.com/somaz94/slack-qr-bot/commit/d8a45a774893d6683d74f33220ceda9443f08c90))
 - **deps:** bump dependabot/fetch-metadata from 2 to 3 (#11) ([#11](https://github.com/somaz94/slack-qr-bot/pull/11)) ([4c1197a](https://github.com/somaz94/slack-qr-bot/commit/4c1197a38eb278561b886ec65511fef7d11409dd))
 - **deps:** bump actions/github-script from 8 to 9 (#10) ([#10](https://github.com/somaz94/slack-qr-bot/pull/10)) ([1ab6ae7](https://github.com/somaz94/slack-qr-bot/commit/1ab6ae7072409af0319a5c4bb3c3052c030a5d3a))
 - **deps:** bump python-json-logger from 2.0.7 to 4.1.0 (#9) ([#9](https://github.com/somaz94/slack-qr-bot/pull/9)) ([2a84d84](https://github.com/somaz94/slack-qr-bot/commit/2a84d84156d6484c4699965d30d4c086d41bf4ca))
