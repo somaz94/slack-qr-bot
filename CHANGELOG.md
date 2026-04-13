@@ -33,6 +33,7 @@ All notable changes to this project will be documented in this file.
 
 ### Chores
 
+- **deps:** bump dependabot/fetch-metadata from 2 to 3 (#11) ([#11](https://github.com/somaz94/slack-qr-bot/pull/11)) ([4c1197a](https://github.com/somaz94/slack-qr-bot/commit/4c1197a38eb278561b886ec65511fef7d11409dd))
 - **deps:** bump actions/github-script from 8 to 9 (#10) ([#10](https://github.com/somaz94/slack-qr-bot/pull/10)) ([1ab6ae7](https://github.com/somaz94/slack-qr-bot/commit/1ab6ae7072409af0319a5c4bb3c3052c030a5d3a))
 - **deps:** bump python-json-logger from 2.0.7 to 4.1.0 (#9) ([#9](https://github.com/somaz94/slack-qr-bot/pull/9)) ([2a84d84](https://github.com/somaz94/slack-qr-bot/commit/2a84d84156d6484c4699965d30d4c086d41bf4ca))
 - **deps:** bump gunicorn from 25.1.0 to 25.3.0 in the pip-minor group (#8) ([#8](https://github.com/somaz94/slack-qr-bot/pull/8)) ([0169360](https://github.com/somaz94/slack-qr-bot/commit/016936089c4dd357d981f54d0388c978da1830ce))
