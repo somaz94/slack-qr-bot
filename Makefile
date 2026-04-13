@@ -1,5 +1,5 @@
 # Image URL to use all building/pushing image targets
-IMG ?= somaz940/slack-qr-bot:v0.2.0
+IMG ?= somaz940/slack-qr-bot:v0.3.0
 APP_NAME := slack-qr-bot
 
 GIT_COMMIT := $(shell git rev-parse --short HEAD 2>/dev/null || echo "unknown")

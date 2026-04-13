@@ -38,7 +38,7 @@ docker run -d --name slack-qr-bot \
   -p 8080:8080 \
   -e SLACK_BOT_TOKEN="xoxb-your-token" \
   -e API_KEY="your-api-key" \
-  somaz940/slack-qr-bot:v0.2.0
+  somaz940/slack-qr-bot:v0.3.0
 ```
 
 ### From Source

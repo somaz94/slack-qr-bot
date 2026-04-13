@@ -2,8 +2,8 @@ apiVersion: v2
 name: slack-qr-bot
 description: A Helm chart for a Slack bot that generates QR codes from URLs and delivers them to channels
 type: application
-version: 0.2.0
-appVersion: "v0.2.0"
+version: 0.3.0
+appVersion: "v0.3.0"
 
 kubeVersion: ">=1.16.0-0"
 

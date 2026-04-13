@@ -8,7 +8,7 @@ revisionHistoryLimit: 1
 image:
   repository: somaz940/slack-qr-bot
   pullPolicy: IfNotPresent
-  tag: "v0.2.0"
+  tag: "v0.3.0"
 
 nameOverride: ""
 fullnameOverride: ""

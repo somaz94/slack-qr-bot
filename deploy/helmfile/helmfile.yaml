@@ -10,7 +10,7 @@ releases:
     namespace: slack-bots
     createNamespace: true
     chart: ../../helm/slack-qr-bot
-    version: 0.2.0
+    version: 0.3.0
     values:
       - values/mgmt.yaml
     labels:
