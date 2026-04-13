@@ -161,7 +161,10 @@ make help             # Show all available targets
 | [Configuration Guide](docs/configuration.md) | Environment variables, API key, rate limiting, logging, CI/CD |
 | [Deployment Guide](docs/deployment.md) | Local dev, Docker, Kubernetes deployment |
 | [Deploy Examples](deploy/README.md) | Standalone K8s manifests, Helmfile configuration |
+| [Helm Chart](helm/slack-qr-bot/README.md) | Helm chart configuration reference |
 | [Slack App Setup](docs/slack-app-setup.md) | OAuth scopes, bot token, channel setup |
+| [Testing Guide](docs/test.md) | Unit tests, Helm tests, smoke tests |
+| [Version Guide](docs/version.md) | Version management, bump process, release workflow |
 | [Troubleshooting](docs/troubleshooting.md) | Common errors and solutions |
 
 <br/>
