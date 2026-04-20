@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 
 ### Chores
 
+- **deps:** bump docker/login-action from 3 to 4 (#13) ([#13](https://github.com/somaz94/slack-qr-bot/pull/13)) ([8daace1](https://github.com/somaz94/slack-qr-bot/commit/8daace195756d36e10b5383d9b024c293b7ccd5c))
 - **deps:** bump docker/setup-qemu-action from 3 to 4 (#12) ([#12](https://github.com/somaz94/slack-qr-bot/pull/12)) ([b55b1c2](https://github.com/somaz94/slack-qr-bot/commit/b55b1c21c4c204623a7ab2a47e478c941a7390c3))
 
 ### Contributors
