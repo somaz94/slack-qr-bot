@@ -51,6 +51,16 @@ make run
 
 ### Helm
 
+**Recommended: OCI registry (Helm 3.8+)**
+
+```bash
+helm install my-bot oci://ghcr.io/somaz94/charts/slack-qr-bot \
+  --version 0.3.0 \
+  -n slack-bots --create-namespace
+```
+
+**Alternative: classic Helm repo**
+
 ```bash
 helm repo add slack-qr-bot https://somaz94.github.io/slack-qr-bot/helm-repo
 helm repo update
