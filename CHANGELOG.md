@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased (2026-04-20)
+
+### Features
+
+- **ci:** publish Helm chart to GHCR (OCI) alongside gh-pages ([cf1ee33](https://github.com/somaz94/slack-qr-bot/commit/cf1ee3385cfffd8281a80e2272942d1e0512ed76))
+
+### Chores
+
+- **deps:** bump docker/setup-qemu-action from 3 to 4 (#12) ([#12](https://github.com/somaz94/slack-qr-bot/pull/12)) ([b55b1c2](https://github.com/somaz94/slack-qr-bot/commit/b55b1c21c4c204623a7ab2a47e478c941a7390c3))
+
+### Contributors
+
+- somaz
+
+<br/>
+
 ## [v0.3.0](https://github.com/somaz94/slack-qr-bot/compare/v0.2.0...v0.3.0) (2026-04-13)
 
 ### Features
