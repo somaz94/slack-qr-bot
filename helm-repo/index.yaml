@@ -3,10 +3,10 @@ entries:
   slack-qr-bot:
   - apiVersion: v2
     appVersion: main
-    created: "2026-04-20T05:36:52.469884572Z"
+    created: "2026-04-21T06:09:08.696270507Z"
     description: A Helm chart for a Slack bot that generates QR codes from URLs and
       delivers them to channels
-    digest: a5c02c789a3324deb3ca62e684d8694c2b39e26fb76b2b5582ff39fcc3d317bd
+    digest: 07f498c64df42fe62d0cc794cd9cf5fde5ab439b858a8aecbcf3f61e44e90f76
     home: https://github.com/somaz94/slack-qr-bot
     keywords:
     - slack
@@ -25,4 +25,4 @@ entries:
     urls:
     - https://somaz94.github.io/slack-qr-bot/helm-repo/slack-qr-bot-0.3.0.tgz
     version: 0.3.0
-generated: "2026-04-20T05:36:52.46917042Z"
+generated: "2026-04-21T06:09:08.695153031Z"
