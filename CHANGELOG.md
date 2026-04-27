@@ -2,14 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased (2026-04-20)
+## Unreleased (2026-04-27)
 
 ### Features
 
 - **ci:** publish Helm chart to GHCR (OCI) alongside gh-pages ([cf1ee33](https://github.com/somaz94/slack-qr-bot/commit/cf1ee3385cfffd8281a80e2272942d1e0512ed76))
 
+### Bug Fixes
+
+- **ci:** use staged tarball for OCI push (gh-pages branch checkout invalidates ./helm/ path) ([ef1ad65](https://github.com/somaz94/slack-qr-bot/commit/ef1ad651370e1953f5be36533cbe3ba05cf07016))
+
+### Continuous Integration
+
+- use helm-chart-release-action@v1 (replace inline release script) ([9d685b8](https://github.com/somaz94/slack-qr-bot/commit/9d685b89a652c74d9d646eee2de50510a4ac412d))
+
 ### Chores
 
+- **deps:** update pillow requirement from >=10.4.0 to >=12.2.0 (#14) ([#14](https://github.com/somaz94/slack-qr-bot/pull/14)) ([a4b857d](https://github.com/somaz94/slack-qr-bot/commit/a4b857d63749c99128b7d52f2ee29c7c2bbbfad3))
 - **deps:** bump docker/login-action from 3 to 4 (#13) ([#13](https://github.com/somaz94/slack-qr-bot/pull/13)) ([8daace1](https://github.com/somaz94/slack-qr-bot/commit/8daace195756d36e10b5383d9b024c293b7ccd5c))
 - **deps:** bump docker/setup-qemu-action from 3 to 4 (#12) ([#12](https://github.com/somaz94/slack-qr-bot/pull/12)) ([b55b1c2](https://github.com/somaz94/slack-qr-bot/commit/b55b1c21c4c204623a7ab2a47e478c941a7390c3))
 
