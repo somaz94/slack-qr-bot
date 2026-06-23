@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased (2026-04-27)
+## Unreleased (2026-06-23)
 
 ### Features
 
@@ -14,10 +14,13 @@ All notable changes to this project will be documented in this file.
 
 ### Continuous Integration
 
+- add concurrency guards to recurring workflows ([f993c42](https://github.com/somaz94/slack-qr-bot/commit/f993c42d55f1b1aae24aa8588bb1dbcdcfe3fbd0))
 - use helm-chart-release-action@v1 (replace inline release script) ([9d685b8](https://github.com/somaz94/slack-qr-bot/commit/9d685b89a652c74d9d646eee2de50510a4ac412d))
 
 ### Chores
 
+- **deps:** bump actions/checkout from 6 to 7 (#17) ([#17](https://github.com/somaz94/slack-qr-bot/pull/17)) ([58c54dd](https://github.com/somaz94/slack-qr-bot/commit/58c54ddeeefa07b46b6f42c42c92d17e85a579b3))
+- **deps:** bump slack-sdk from 3.41.0 to 3.42.0 in the pip-minor group (#16) ([#16](https://github.com/somaz94/slack-qr-bot/pull/16)) ([7bd67d0](https://github.com/somaz94/slack-qr-bot/commit/7bd67d0d9264eaa7445ba3c43baf1d262b1e24a8))
 - **deps:** update pillow requirement from >=10.4.0 to >=12.2.0 (#14) ([#14](https://github.com/somaz94/slack-qr-bot/pull/14)) ([a4b857d](https://github.com/somaz94/slack-qr-bot/commit/a4b857d63749c99128b7d52f2ee29c7c2bbbfad3))
 - **deps:** bump docker/login-action from 3 to 4 (#13) ([#13](https://github.com/somaz94/slack-qr-bot/pull/13)) ([8daace1](https://github.com/somaz94/slack-qr-bot/commit/8daace195756d36e10b5383d9b024c293b7ccd5c))
 - **deps:** bump docker/setup-qemu-action from 3 to 4 (#12) ([#12](https://github.com/somaz94/slack-qr-bot/pull/12)) ([b55b1c2](https://github.com/somaz94/slack-qr-bot/commit/b55b1c21c4c204623a7ab2a47e478c941a7390c3))
