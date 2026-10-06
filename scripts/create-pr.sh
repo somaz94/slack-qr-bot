@@ -7,16 +7,18 @@ set -euo pipefail
 TITLE="${1:?Usage: create-pr.sh \"PR title\"}"
 BRANCH=$(git branch --show-current)
 BASE="main"
+git fetch -q origin "$BASE"
+BASE_REF="origin/${BASE}"
 
 if [[ "${BRANCH}" == "${BASE}" ]]; then
     echo "Error: Cannot create PR from ${BASE} branch"
     exit 1
 fi
 
-COMMITS=$(git log "${BASE}..HEAD" --pretty=format:"- %s" --reverse 2>/dev/null || echo "")
+COMMITS=$(git log "${BASE_REF}..HEAD" --pretty=format:"- %s" --reverse 2>/dev/null || echo "")
 
 if [ -z "$COMMITS" ]; then
-  echo "No commits found between ${BASE} and ${BRANCH}"
+  echo "No commits found between ${BASE_REF} and ${BRANCH}"
   exit 1
 fi
 
@@ -38,7 +40,7 @@ if [ -z "$SUMMARY" ]; then
   SUMMARY="$COMMITS"
 fi
 
-CHANGED_TESTS=$(git diff "${BASE}..HEAD" --name-only | grep 'test_.*\.py$' | sed 's|/[^/]*$||' | sort -u || true)
+CHANGED_TESTS=$(git diff "${BASE_REF}...HEAD" --name-only | grep 'test_.*\.py$' | sed 's|/[^/]*$||' | sort -u || true)
 HAS_TESTS=false
 [ -n "$CHANGED_TESTS" ] && HAS_TESTS=true
 
