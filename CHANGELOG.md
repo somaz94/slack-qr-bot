@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased (2026-07-27)
+## Unreleased (2026-11-04)
 
 ### Features
 
@@ -15,6 +15,10 @@ All notable changes to this project will be documented in this file.
 
 ### Continuous Integration
 
+- deduplicate identical commit lines in release notes ([2e25d18](https://github.com/somaz94/slack-qr-bot/commit/2e25d186f4f131d803b2acded8aab758ee57732d))
+- trim redundant comments in gitlab-mirror workflow ([693f637](https://github.com/somaz94/slack-qr-bot/commit/693f637d575a0f609bb4974c4b20b559075ecd46))
+- retry mirror pushes on transient remote failures ([074a552](https://github.com/somaz94/slack-qr-bot/commit/074a5529caa49ca3f7a00d7a82430bdf5b09c489))
+- drop the dead issue-close trigger from changelog generation ([43f6efb](https://github.com/somaz94/slack-qr-bot/commit/43f6efbd6d5880fa78a23f8efb6f220165729b4a))
 - adopt semantic-pr, labels, lock-threads, PR size, and auto-assign reusables ([546bc1c](https://github.com/somaz94/slack-qr-bot/commit/546bc1c8b4f9aa6bf591cefe7de082d03451538e))
 - use reusable stale-issues workflow ([7edc4c3](https://github.com/somaz94/slack-qr-bot/commit/7edc4c3a9ef043efeba3d0a34e251354b589a79c))
 - use reusable issue-greeting workflow ([68f8d7b](https://github.com/somaz94/slack-qr-bot/commit/68f8d7b9e2a8812f302a502f0becb0ad0157f9c0))
@@ -27,6 +31,19 @@ All notable changes to this project will be documented in this file.
 
 ### Chores
 
+- **deps:** update pillow requirement from >=12.3.0 to >=13.0.0 (#29) ([#29](https://github.com/somaz94/slack-qr-bot/pull/29)) ([0b25c33](https://github.com/somaz94/slack-qr-bot/commit/0b25c3363fbfb276db8f811cb519b7d679ed25f5))
+- **deps:** bump docker/login-action (#30) ([#30](https://github.com/somaz94/slack-qr-bot/pull/30)) ([5b58634](https://github.com/somaz94/slack-qr-bot/commit/5b58634217a427c2b5d1dea189976452d01fcff9))
+- **deps:** bump tenacity from 9.1.4 to 9.2.1 in the pip-minor group (#28) ([#28](https://github.com/somaz94/slack-qr-bot/pull/28)) ([1455708](https://github.com/somaz94/slack-qr-bot/commit/1455708975377a2a24497ccc34ae45b6895ce45d))
+- **deps:** bump slack-sdk from 3.44.1 to 3.45.0 in the pip-minor group (#27) ([#27](https://github.com/somaz94/slack-qr-bot/pull/27)) ([44310fe](https://github.com/somaz94/slack-qr-bot/commit/44310fe6f2343f5b53e1419e64a3acf825157b57))
+- base create-pr.sh on origin/main ([521a4ca](https://github.com/somaz94/slack-qr-bot/commit/521a4ca90d71166175f96b7514d2aa0574d07be2))
+- classify scoped and breaking commits in create-pr.sh ([4e8889f](https://github.com/somaz94/slack-qr-bot/commit/4e8889f8032415aee9461f6fea68005ed6493b34))
+- trim boilerplate comments in repo config and scripts ([d225b5c](https://github.com/somaz94/slack-qr-bot/commit/d225b5c12022a7d2ff2277c4a5cf7bb6c34fb1a0))
+- **deps:** bump slack-sdk from 3.44.0 to 3.44.1 in the pip-minor group (#26) ([#26](https://github.com/somaz94/slack-qr-bot/pull/26)) ([9d564e0](https://github.com/somaz94/slack-qr-bot/commit/9d564e038a64da6572775740f8bffe78fe5ea549))
+- **deps:** bump slack-sdk from 3.43.0 to 3.44.0 in the pip-minor group (#25) ([#25](https://github.com/somaz94/slack-qr-bot/pull/25)) ([59bb297](https://github.com/somaz94/slack-qr-bot/commit/59bb29774bf4ec152dfc914bd637526cfa05c083))
+- **deps:** bump gunicorn from 26.0.0 to 26.2.0 in the pip-minor group (#24) ([#24](https://github.com/somaz94/slack-qr-bot/pull/24)) ([32d7daf](https://github.com/somaz94/slack-qr-bot/commit/32d7dafcfd5e2fd3fd2c1940fffff97616b7e4fe))
+- **deps:** bump python-json-logger in the pip-minor group (#23) ([#23](https://github.com/somaz94/slack-qr-bot/pull/23)) ([03d252c](https://github.com/somaz94/slack-qr-bot/commit/03d252c1aad041fefc574cf919ab6367526f2582))
+- **deps:** bump docker/login-action in the actions-minor group (#22) ([#22](https://github.com/somaz94/slack-qr-bot/pull/22)) ([9824650](https://github.com/somaz94/slack-qr-bot/commit/982465058d51b6f6dcf91463da5148afff7802ae))
+- **deps:** bump docker/login-action in the actions-minor group (#21) ([#21](https://github.com/somaz94/slack-qr-bot/pull/21)) ([8ea9518](https://github.com/somaz94/slack-qr-bot/commit/8ea9518cca8404be35d7340ade36dec1bf9c0efb))
 - **deps:** bump actions/setup-python from 6 to 7 (#20) ([#20](https://github.com/somaz94/slack-qr-bot/pull/20)) ([dbe7273](https://github.com/somaz94/slack-qr-bot/commit/dbe7273b1b20e8f3544013f3f3338d5685fa148a))
 - **deps:** update pillow requirement from >=12.2.0 to >=12.3.0 (#19) ([#19](https://github.com/somaz94/slack-qr-bot/pull/19)) ([8ef810a](https://github.com/somaz94/slack-qr-bot/commit/8ef810aa6883879c38d520a48f0b6abd6db3ffd7))
 - **deps:** bump slack-sdk from 3.42.0 to 3.43.0 in the pip-minor group (#18) ([#18](https://github.com/somaz94/slack-qr-bot/pull/18)) ([5aed158](https://github.com/somaz94/slack-qr-bot/commit/5aed1588e7cd38888efb2f1692258abca31f4efd))
