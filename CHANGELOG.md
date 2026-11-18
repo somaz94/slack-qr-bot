@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased (2026-11-04)
+## Unreleased (2026-11-18)
 
 ### Features
 
@@ -31,6 +31,10 @@ All notable changes to this project will be documented in this file.
 
 ### Chores
 
+- **deps:** bump gunicorn from 26.2.0 to 27.0.0 (#33) ([#33](https://github.com/somaz94/slack-qr-bot/pull/33)) ([ef4533c](https://github.com/somaz94/slack-qr-bot/commit/ef4533cc2708c353faed446e20323d620108e32b))
+- **deps:** bump docker/login-action (#34) ([#34](https://github.com/somaz94/slack-qr-bot/pull/34)) ([f14d2cd](https://github.com/somaz94/slack-qr-bot/commit/f14d2cdf66c7b12a199ce620fb3c943679d64ec7))
+- **deps:** bump python (#32) ([#32](https://github.com/somaz94/slack-qr-bot/pull/32)) ([bf5ef05](https://github.com/somaz94/slack-qr-bot/commit/bf5ef053050f11c1f3c718ad3a3d1f5a5a42de73))
+- **deps:** bump slack-sdk from 3.45.0 to 3.46.0 in the pip-minor group (#31) ([#31](https://github.com/somaz94/slack-qr-bot/pull/31)) ([9a40698](https://github.com/somaz94/slack-qr-bot/commit/9a406988f535614c0a9ec49f14106546708ec4ef))
 - **deps:** update pillow requirement from >=12.3.0 to >=13.0.0 (#29) ([#29](https://github.com/somaz94/slack-qr-bot/pull/29)) ([0b25c33](https://github.com/somaz94/slack-qr-bot/commit/0b25c3363fbfb276db8f811cb519b7d679ed25f5))
 - **deps:** bump docker/login-action (#30) ([#30](https://github.com/somaz94/slack-qr-bot/pull/30)) ([5b58634](https://github.com/somaz94/slack-qr-bot/commit/5b58634217a427c2b5d1dea189976452d01fcff9))
 - **deps:** bump tenacity from 9.1.4 to 9.2.1 in the pip-minor group (#28) ([#28](https://github.com/somaz94/slack-qr-bot/pull/28)) ([1455708](https://github.com/somaz94/slack-qr-bot/commit/1455708975377a2a24497ccc34ae45b6895ce45d))
